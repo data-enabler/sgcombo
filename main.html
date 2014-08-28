@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8"> 
+<script type="text/javascript">
+var MAX_UNDIZZY = 240;
+var ud = { l:15, m:20, h:30, s:20, x:0 };
+var types = [ 'l', 'm', 'h', 's', 'x' ];
+
+var scaled = function(n, dmg) {
+  var s = Math.pow(0.875, Math.max(0, n - 3));
+  if (dmg >= 1000) {
+    return Math.max(0.275, s) * dmg;
+  } else {
+    return Math.max(0.2, s) * dmg;
+  }
+};
+
+var damage = function(moves) {
+  var undizzy = 240;
+  var i = 0, dmg = 0;
+  while (undizzy > 0) {
+    idx = i % moves.length;
+    for (var j = 0; j < types.length; j++) {
+      if (moves[idx][types[j]] != undefined) {
+        dmg += scaled(i+1, moves[idx][types[j]]);
+        undizzy -= ud[types[j]];
+      }
+    }
+    i++;
+  }
+  return dmg;
+};
+
+var damage2 = function(chains, startStage, startDrama, loop) {
+  var stage = +startStage || 2;
+  var undizzy = isNaN(startDrama) ? 0 : startDrama;
+  var i = 0, hits = 0, totalDmg = 0;
+	loop = loop === undefined ? true : loop;
+  while (undizzy < MAX_UNDIZZY && (i < chains.length || loop)) {
+    i = i % chains.length;
+		for (var j = 0; j < chains[i].length; j++) {
+			var move = chains[i][j];
+			var dmg = +move.slice(0, -1);
+			var diz = ud[move.slice(-1)];
+			if (isNaN(dmg) || isNaN(diz)) return 'Error: Cannot parse "' + move + '"';
+			hits++;
+			totalDmg += scaled(hits, dmg);
+			if (stage >= 3) undizzy += diz;
+		}
+    i++;
+		stage = Math.min(stage + 1, 5);
+  }
+  return {
+		'totalHits': hits,
+		'totalDamage': totalDmg,
+		'endDrama': undizzy
+	};
+};
+
+// TODO: alt damage for Tricobezoar
+
+Number.prototype.x = function(n) {
+  var ret = [];
+  for (var i = 0; i < n; i++) {
+    ret.push(this);
+  }
+  return ret;
+};
+
+Array.prototype.flat = function() {
+  return this.reduce(function(a, b) {
+    return a.concat(b);
+  }, []);
+};
+
+var Character = function(moveset) { this.moveset = moveset; };
+
+Character.prototype.move = function(name) {
+  var move = this.moveset[name];
+  if (!move.ref) { return move; }
+  var ret = Object.create(this.movemove.ref);
+  for (var prop in move) {
+    ret[prop] = move[prop];
+  }
+  return ret;
+};
+
+var characters = {
+	filia: new Character({
+    // Standing
+    's.LP': {t:'l', d:[300, 200], m:[2.5, 2.5]},
+    's.MP': {t:'m', d:[550], m:[7.5]},
+    's.HP': {t:'h', d:[1000], m:[10.0]},
+    's.LK': {t:'l', d:[400], m:[2.5]},
+    's.MK': {t:'m', d:[450], m:[7.5]},
+    's.HK': {t:'h', d:[1000], m:[10.0]},
+    // Crouching
+    'c.LP': {t:'l', d:[200], m:[2.5]},
+    'c.MP': {t:'m', d:[600], m:[7.5]},
+    'c.HP': {t:'h', d:[900], m:[10.0]},
+    'c.LK': {t:'l', d:[200], m:[2.5]},
+    'c.MK': {t:'m', d:[150, 150, 200, 250, 400], m:[1.3.x(5)].flat()},
+    'c.HK': {t:'h', d:[1100], m:[10.0]},
+    // Air
+    'j.LP': {t:'l', d:[250], m:[2.5]},
+    'j.MP': {t:'m', d:[150..x(5), 250].flat(), m:[1.1.x(6)].flat()},
+    'j.HP': {t:'h', d:[900], m:[10.0]},
+    'j.LK': {t:'l', d:[250], m:[2.5]},
+    'j.MK': {t:'m', d:[200, 350], m:[7.5, 7.5]},
+    'j.HK': {t:'h', d:[900], m:[10.0]},
+    // Throws
+    'Throw':   {t:'t', s:50.0, freeze:true, d:[0, 212..x(4)].flat(), m:[0, 5.0.x(4)].flat()},
+    'j.Throw': {t:'t', s:50.0, freeze:true, d:[300, 1000], m:[10.0, 10.0]},
+    // Specials
+    'qcf.LP':   {t:'s', d:[600], m:[3.9]},
+    'qcf.MP':   {ref:'qcf.LP'},
+    'qcf.HP':   {ref:'qcf.LP'},
+    'dp.LP':    {t:'s', d:[800], m:[3.9]},
+    'dp.MP':    {t:'s', d:[600, 400], m:[2.4, 2.4]},
+    'dp.HP':    {t:'s', d:[900, 300, 300], m:[2.4, 2.4, 2.4]},
+    'qcf.K':    {t:'n', d:[], m:[]},
+    'qcb.LK':   {t:'s', d:[300, 300, 400], m:[2.0, 2.0, 3.9]},
+    'qcb.MK':   {t:'s', d:[300, 300, 300, 400], m:[2.0, 2.0, 2.0, 3.9]},
+    'qcb.HK':   {t:'s', d:[300..x(5), 400].flat(), m:[2.0.x(5), 3.9].flat()},
+    'j.qcb.LK': {ref:'qcb.MK'},
+    'j.qcb.MK': {ref:'qcb.MK'},
+    'j.qcb.HK': {ref:'qcb.MK'},
+    // Supers
+    'dp.PP':    {t:'x', lv:1, d:[400, 200..x(6), 400, 3500, 500].flat(), m:[-100]},
+    'qcb.KK':   {t:'x', lv:1, d:[300..x(4), 1750].flat(), m:[-100]},
+    'j.qcb.KK': {ref:'qcb.KK'},
+    'qcb.PP':   {t:'x', lv:3, d:[4750], m:[-300]},
+    // Misc
+    'TagIn': {t:'n', d:[500], m:[10.1]},
+    'Snap':  {t:'n', d:[0], m:[-100]}
+	})
+};
+
+var inAir = function(move) {
+  return typeof move == 'string' && move.slice(0, 2) == 'j.';
+};
+
+var scaleDmg = function(scaling, baseDmg) {
+  if (baseDmg >= 1000) {
+    return Math.max(0.275, s) * baseDmg;
+  } else {
+    return Math.max(0.2, s) * baseDmg;
+  }
+}
+
+var combo = function(character, chains, options) {
+  var hits = 0, totalDmg = 0, scaling = 1;
+  var stage = 1, undizzy = 0, meter = 5;
+  if (typeof options == 'object') {
+    stage = (options.startStage | 0) || stage;
+    undizzy = options.startDrama | 0;
+    if (!isNaN(options.startMeter) && options.startMeter >= 0) {
+      meter = options.startMeter;
+    }
+  }
+
+  for (var chain = 0; chain < chains.length && undizzy < MAX_UNDIZZY; chain++) {
+
+  }
+};
+
+</script>
+</html>
