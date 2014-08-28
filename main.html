@@ -86,13 +86,15 @@ var inAir = function(move) {
   return typeof move == 'string' && move.slice(0, 2) == 'j.';
 };
 
+var minScaling = function(move, dmg) {
+  if (move.lv == 3) { return 0.45; }
+  if (dmg >= 1000) { return 0.275; }
+  return 0.2;
+};
+
 var scaleDmg = function(scaling, baseDmg) {
-  if (baseDmg >= 1000) {
-    return Math.max(0.275, s) * baseDmg;
-  } else {
-    return Math.max(0.2, s) * baseDmg;
-  }
-}
+ return Math.max(1, scaling * baseDmg);
+};
 
 var combo = function(character, chains, options) {
   var hits = 0, totalDmg = 0, scaling = 1;
