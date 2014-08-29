@@ -16,8 +16,10 @@ Array.prototype.flat = function() {
   }, []);
 };
 
-var MAX_UNDIZZY = 240;
-var ud = { l:15, m:20, h:30, s:20, x:0, t:0, n:0 };
+var MAX_UNDIZZY = 240,
+    MIN_SCALING = 0.2,
+    MIN_HEAVY_SCALING = 0.275;
+var UD = { l:15, m:20, h:30, s:20, x:0 };
 
 var Character = function(moveset) { this.moveset = moveset; };
 
@@ -55,8 +57,8 @@ var characters = {
     'j.MK': {t:'m', d:[200, 350], m:[7.5, 7.5]},
     'j.HK': {t:'h', d:[900], m:[10.0]},
     // Throws
-    'Throw':   {t:'t', s:50.0, freeze:true, d:[0, 212..x(4)].flat(), m:[0, 5.0.x(4)].flat()},
-    'j.Throw': {t:'t', s:50.0, freeze:true, d:[300, 1000], m:[10.0, 10.0]},
+    'Throw':   {t:'x', s:50.0, freeze:true, d:[0, 212..x(4)].flat(), m:[0, 5.0.x(4)].flat()},
+    'j.Throw': {t:'x', s:50.0, freeze:true, d:[300, 1000], m:[10.0, 10.0]},
     // Specials
     'qcf.LP':   {t:'s', d:[600], m:[3.9]},
     'qcf.MP':   {ref:'qcf.LP'},
@@ -64,7 +66,7 @@ var characters = {
     'dp.LP':    {t:'s', d:[800], m:[3.9]},
     'dp.MP':    {t:'s', d:[600, 400], m:[2.4, 2.4]},
     'dp.HP':    {t:'s', d:[900, 300, 300], m:[2.4, 2.4, 2.4]},
-    'qcf.K':    {t:'n', d:[], m:[]},
+    'qcf.K':    {t:'x', d:[], m:[]},
     'qcb.LK':   {t:'s', d:[300, 300, 400], m:[2.0, 2.0, 3.9]},
     'qcb.MK':   {t:'s', d:[300, 300, 300, 400], m:[2.0, 2.0, 2.0, 3.9]},
     'qcb.HK':   {t:'s', d:[300..x(5), 400].flat(), m:[2.0.x(5), 3.9].flat()},
@@ -77,8 +79,8 @@ var characters = {
     'j.qcb.KK': {ref:'qcb.KK'},
     'qcb.PP':   {t:'x', lv:3, d:[4750], m:[-300]},
     // Misc
-    'TagIn': {t:'n', d:[500], m:[10.1]},
-    'Snap':  {t:'n', d:[0], m:[-100]}
+    'TagIn': {t:'x', d:[500], m:[10.1]},
+    'Snap':  {t:'x', d:[0], m:[-100]}
 	})
 };
 
@@ -96,19 +98,59 @@ var scaleDmg = function(scaling, baseDmg) {
  return Math.max(1, scaling * baseDmg);
 };
 
+var parseAtk = function(atkStr) {
+  var found = atkStr.match(/^([A-Za-z\.]+)(?:\(([\d,\s]+)\))?$/);
+  if (!found) {
+    console.log('Error parsing "' + atkStr + '"');
+    return null;
+  }
+
+  var atk = { name:found[1] };
+
+  var hits = found[2].replace(/\s/g, '').split(',');
+  if (hits.length == 1) {
+    var h1 = [];
+    for (var i = 0; i < +hits[0]; i++) {
+      h1[i] = i;
+    }
+    if (h1.length) atk.hits = h1;
+  } else if (hits.length > 1) {
+    var h2 = [];
+    for (var j = 0; j < hits.length; j++) {
+      if (+hits[j]) {
+        h2.push(+hits[j] - 1);
+      }
+    }
+    if (h2.length) atk.hits = h2;
+  }
+
+  return atk;
+};
+
 var combo = function(character, chains, options) {
-  var hits = 0, totalDmg = 0, scaling = 1;
-  var stage = 1, undizzy = 0, meter = 5;
+  var hits = 0, totalDmg = 0;
+  var stage = 1, scaling = 1, undizzy = 0, meter = 5;
+  var udTriggered = false;
   if (typeof options == 'object') {
     stage = (options.startStage | 0) || stage;
     undizzy = options.startDrama | 0;
     if (!isNaN(options.startMeter) && options.startMeter >= 0) {
       meter = options.startMeter;
     }
+    if (!isNaN(options.startScaling) && options.startScaling >= MIN_SCALING &&
+        options.startScaling < 1) {
+      scaling = options.startScaling;
+    }
   }
 
-  for (var chain = 0; chain < chains.length && undizzy < MAX_UNDIZZY; chain++) {
+  for (var c = 0; c < chains.length; c++) {
+    var chain = chains[c];
+    for (var m = 0; m < chain.length; m++) {
+      var move;
+    }
 
+    stage = min(5, stage + 1);
+    c++;
   }
 };
 
