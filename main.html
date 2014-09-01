@@ -18,7 +18,9 @@ Array.prototype.flat = function() {
 
 var MAX_UNDIZZY = 240,
     MIN_SCALING = 0.2,
-    MIN_HEAVY_SCALING = 0.275;
+    MIN_HEAVY_SCALING = 0.275,
+    MIN_LVL3_SCALING = 0.45;
+var SCALING_RATE = 0.875;
 var UD = { l:15, m:20, h:30, s:20, x:0 };
 
 var Character = function(moveset) { this.moveset = moveset; };
@@ -88,14 +90,26 @@ var inAir = function(move) {
   return typeof move == 'string' && move.slice(0, 2) == 'j.';
 };
 
+var dizzy = function(move) {
+  return UD[move.t];
+};
+
 var minScaling = function(move, dmg) {
-  if (move.lv == 3) { return 0.45; }
-  if (dmg >= 1000) { return 0.275; }
-  return 0.2;
+  if (move.lv == 3) { return MIN_LVL3_SCALING; }
+  if (dmg >= 1000) { return MIN_HEAVY_SCALING; }
+  return MIN_SCALING;
+};
+
+var scale = function(scaling) {
+  return Math.max(MIN_SCALING, scaling * SCALING_RATE);
 };
 
 var scaleDmg = function(scaling, baseDmg) {
  return Math.max(1, scaling * baseDmg);
+};
+
+var scaleMeter = function(scaling, baseMeter) {
+ return scaling * baseMeter;
 };
 
 var parseAtk = function(atkStr) {
@@ -108,13 +122,13 @@ var parseAtk = function(atkStr) {
   var atk = { name:found[1] };
 
   var hits = found[2].replace(/\s/g, '').split(',');
-  if (hits.length == 1) {
+  if (hits.length == 2) {
     var h1 = [];
     for (var i = 0; i < +hits[0]; i++) {
       h1[i] = i;
     }
     if (h1.length) atk.hits = h1;
-  } else if (hits.length > 1) {
+  } else if (hits.length >= 3) {
     var h2 = [];
     for (var j = 0; j < hits.length; j++) {
       if (+hits[j]) {
@@ -128,15 +142,12 @@ var parseAtk = function(atkStr) {
 };
 
 var combo = function(character, chains, options) {
-  var hits = 0, totalDmg = 0;
-  var stage = 1, scaling = 1, undizzy = 0, meter = 5;
+  var numHits = 0, totalDmg = 0;
+  var stage = 0, scaling = 1, undizzy = 0, meterGain = 0, meterDrain = 0;
   var udTriggered = false;
   if (typeof options == 'object') {
     stage = (options.startStage | 0) || stage;
     undizzy = options.startDrama | 0;
-    if (!isNaN(options.startMeter) && options.startMeter >= 0) {
-      meter = options.startMeter;
-    }
     if (!isNaN(options.startScaling) && options.startScaling >= MIN_SCALING &&
         options.startScaling < 1) {
       scaling = options.startScaling;
@@ -145,13 +156,86 @@ var combo = function(character, chains, options) {
 
   for (var c = 0; c < chains.length; c++) {
     var chain = chains[c];
+
     for (var m = 0; m < chain.length; m++) {
-      var move;
+      var atk = parseAtk(chain[m]);
+      var move = character.move(atk.name);
+      var hits = atk.hits;
+
+      // Default hits if necessary
+      if (!hits) {
+        hits = [];
+        for (var i = 0; i < move.d; i++) {
+          hits.push(i);
+        }
+      }
+
+      for (var h = 0; h < atk.hits.length; h++) {
+        var hit = hits[h];
+        var dmg = move.d[hit];
+        var meter = move.m[hit];
+
+        var s = Math.max(minScaling(move, dmg), scaling);
+        totalDmg += scaleDmg(s, dmg);
+        if (!isNaN(meter) && meter !== 0) {
+          if (meter > 0) {
+            meterGain += scaleMeter(s, meter);
+          } else {
+            meterDrain -= meter;
+          }
+        }
+
+        // Increment chain?
+        if (m === 0 && h === 0) {
+          switch (stage) {
+            case 0:
+              if (inAir(move)) {
+                stage = 1;
+              } else {
+                stage = 2;
+              }
+              break;
+            case 3:
+              stage = 5;
+              break;
+            default:
+              stage = Math.min(5, stage + 1);
+          }
+        }
+
+        var oldUndizzy = undizzy;
+        undizzy += dizzy(move);
+
+        // Burst?
+        if (m === 0 && oldUndizzy >= MAX_UNDIZZY) {
+          udTriggered = true;
+          // End combo
+        }
+
+        // Scale damage
+        if (numHits >= 3 && !move.freeze) {
+          scaling = scale(scaling);
+        }
+      }
+
+      // Forced damage scaling
+      if (move.s) {
+        scaling = Math.min(move.s, scaling);
+      }
     }
 
-    stage = min(5, stage + 1);
     c++;
   }
+
+  return {
+    'Hits': numHits,
+    'Damage': totalDmg,
+    'Tension Gain': meterGain,
+    'Tension Drain': meterDrain,
+    'Net Tension': meterGain - meterDrain,
+    'Drama': undizzy,
+    'Infinity Breaker Triggered': udTriggered
+  };
 };
 
 </script>

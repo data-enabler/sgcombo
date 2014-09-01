@@ -1,1 +1,3 @@
-- alt damage for Tricobezoar
+- IPS stage 4
+- Damage unscaling for Fukua lvl 5
+- Alt damage for Tricobezoar
