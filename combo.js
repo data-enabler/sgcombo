@@ -24,7 +24,7 @@ var Character = function(moveset) { this.moveset = moveset; };
 Character.prototype.move = function(name) {
   var move = this.moveset[name];
   if (!move.ref) { return move; }
-  var ret = Object.create(this.movemove.ref);
+  var ret = Object.create(this.move(move.ref));
   for (var prop in move) {
     ret[prop] = move[prop];
   }
@@ -72,7 +72,7 @@ var characters = {
     'j.qcb.MK': {ref:'qcb.MK'},
     'j.qcb.HK': {ref:'qcb.MK'},
     // Supers
-    'dp.PP':    {t:'x', lv:1, d:[400, 200..x(6), 400, 3500, 500].flat(), m:[-100]},
+    'dp.PP':    {t:'x', lv:1, d:[400, 200..x(6), 400, 3341, 500].flat(), m:[-100]},
     'qcb.KK':   {t:'x', lv:1, d:[300..x(4), 1750].flat(), m:[-100]},
     'j.qcb.KK': {ref:'qcb.KK'},
     'qcb.PP':   {t:'x', lv:3, d:[4750], m:[-300]},
@@ -101,7 +101,7 @@ var scale = function(scaling) {
 };
 
 var scaleDmg = function(scaling, baseDmg) {
- return Math.max(1, scaling * baseDmg);
+ return Math.max(1, scaling * baseDmg) | 0;
 };
 
 var scaleMeter = function(scaling, baseMeter) {
@@ -115,16 +115,17 @@ var parseAtk = function(atkStr) {
     return null;
   }
 
-  var atk = { name:found[1] };
+  var atk = { name: found[1] };
+  if (!found[2]) return atk;
 
   var hits = found[2].replace(/\s/g, '').split(',');
-  if (hits.length == 2) {
+  if (hits.length == 1) {
     var h1 = [];
     for (var i = 0; i < +hits[0]; i++) {
       h1[i] = i;
     }
     if (h1.length) atk.hits = h1;
-  } else if (hits.length >= 3) {
+  } else if (hits.length > 1) {
     var h2 = [];
     for (var j = 0; j < hits.length; j++) {
       if (+hits[j]) {
@@ -161,23 +162,25 @@ var combo = function(character, chains, options) {
       // Default hits if necessary
       if (!hits) {
         hits = [];
-        for (var i = 0; i < move.d; i++) {
+        for (var i = 0; i < move.d.length; i++) {
           hits.push(i);
         }
       }
 
-      for (var h = 0; h < atk.hits.length; h++) {
+      for (var h = 0; h < hits.length; h++) {
         var hit = hits[h];
         var dmg = move.d[hit];
         var meter = move.m[hit];
 
         var s = Math.max(minScaling(move, dmg), scaling);
+        numHits++;
         totalDmg += scaleDmg(s, dmg);
+        console.log('Hit ' + numHits + ': ' + scaleDmg(s, dmg) + 'dmg, Total: ' + totalDmg + 'dmg (scaling: ' + s + ')');
         if (!isNaN(meter) && meter !== 0) {
           if (meter > 0) {
-            meterGain += scaleMeter(s, meter);
+            meterGain += scaleMeter(s, meter / 100);
           } else {
-            meterDrain -= meter;
+            meterDrain -= meter / 100;
           }
         }
 
@@ -199,11 +202,12 @@ var combo = function(character, chains, options) {
           }
         }
 
+        // Add undizzy
         var oldUndizzy = undizzy;
-        undizzy += dizzy(move);
+        if (stage >= 3) undizzy += dizzy(move);
 
         // Burst?
-        if (m === 0 && oldUndizzy >= MAX_UNDIZZY) {
+        if (m === 0 && stage >= 3 && oldUndizzy >= MAX_UNDIZZY) {
           udTriggered = true;
           // End combo
         }
@@ -219,17 +223,16 @@ var combo = function(character, chains, options) {
         scaling = Math.min(move.s, scaling);
       }
     }
-
-    c++;
   }
 
   return {
     'Hits': numHits,
     'Damage': totalDmg,
-    'Tension Gain': meterGain,
-    'Tension Drain': meterDrain,
-    'Net Tension': meterGain - meterDrain,
+    'Tension Gain': +meterGain.toFixed(3),
+    'Tension Drain': +meterDrain.toFixed(3),
+    'Net Tension': +(meterGain - meterDrain).toFixed(3),
     'Drama': undizzy,
-    'Infinity Breaker Triggered': udTriggered
+    'Infinity Breaker Triggered': udTriggered,
+    'IPS Stage': stage
   };
 };

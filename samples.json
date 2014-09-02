@@ -4,6 +4,6 @@
 ['j.MK(1)', 'j.HK'],
 ['c.LK', 's.HP'],
 ['j.LP', 'j.LK', 'j.qcb.HK'],
-['j.MP', 'j.HK'],
-['s.LP', 's.MK', 's.HP', 'dp.PP']
+['j.MP(3)', 'j.HK'],
+['s.LP(1)', 's.MK', 's.HP', 'dp.PP']
 ]

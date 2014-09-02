@@ -1,3 +1,6 @@
+- Self-chain moves
+- DHC/Tag
 - IPS stage 4
 - Damage unscaling for Fukua lvl 5
+- Whiff meter
 - Alt damage for Tricobezoar
