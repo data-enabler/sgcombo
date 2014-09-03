@@ -12,6 +12,14 @@ Array.prototype.flat = function() {
   }, []);
 };
 
+var range = function(n) {
+  var ret = [];
+  for (var i = 0; i < n; i++) {
+    ret.push(i);
+  }
+  return ret;
+};
+
 var MAX_UNDIZZY = 240,
     MIN_SCALING = 0.2,
     MIN_HEAVY_SCALING = 0.275,
@@ -55,8 +63,16 @@ var characters = {
     'j.MK': {t:'m', d:[200, 350], m:[7.5, 7.5]},
     'j.HK': {t:'h', d:[900], m:[10.0]},
     // Throws
-    'Throw':   {t:'x', s:50.0, freeze:true, d:[0, 212..x(4)].flat(), m:[0, 5.0.x(4)].flat()},
-    'j.Throw': {t:'x', s:50.0, freeze:true, d:[300, 1000], m:[10.0, 10.0]},
+    'Throw':   {t:'x', d:[0, 212..x(4)].flat(), m:[0, 5.0.x(4)].flat(),
+      forcedScaling:50.0,
+      freezeScaling:true,
+      forcedStage:3
+    },
+    'j.Throw': {t:'x', d:[300, 1000], m:[10.0, 10.0],
+      forcedScaling:50.0,
+      freezeScaling:true,
+      forcedStage:3
+    },
     // Specials
     'qcf.LP':   {t:'s', d:[600], m:[3.9]},
     'qcf.MP':   {ref:'qcf.LP'},
@@ -72,7 +88,10 @@ var characters = {
     'j.qcb.MK': {ref:'qcb.MK'},
     'j.qcb.HK': {ref:'qcb.MK'},
     // Supers
-    'dp.PP':    {t:'x', lv:1, d:[400, 200..x(6), 400, 3341, 500].flat(), m:[-100]},
+    'dp.PP':    {t:'x', lv:1, d:[400, 200..x(6), 400, 1500, 200].flat(), m:[-100],
+      retroScaling:[8, 9],
+      minScaling:{8:0.34}
+    },
     'qcb.KK':   {t:'x', lv:1, d:[300..x(4), 1750].flat(), m:[-100]},
     'j.qcb.KK': {ref:'qcb.KK'},
     'qcb.PP':   {t:'x', lv:3, d:[4750], m:[-300]},
@@ -90,9 +109,12 @@ var dizzy = function(move) {
   return UD[move.t];
 };
 
-var minScaling = function(move, dmg) {
+var minScaling = function(move, hit) {
+  if (move.minScaling && move.minScaling[hit]) {
+    return move.minScaling[hit];
+  }
   if (move.lv == 3) { return MIN_LVL3_SCALING; }
-  if (dmg >= 1000) { return MIN_HEAVY_SCALING; }
+  if (move.d[hit] >= 1000) { return MIN_HEAVY_SCALING; }
   return MIN_SCALING;
 };
 
@@ -159,12 +181,12 @@ var combo = function(character, chains, options) {
       var move = character.move(atk.name);
       var hits = atk.hits;
 
+      // Record scaling at start of combo
+      var origScaling = scaling;
+
       // Default hits if necessary
       if (!hits) {
-        hits = [];
-        for (var i = 0; i < move.d.length; i++) {
-          hits.push(i);
-        }
+        hits = range(move.d.length);
       }
 
       for (var h = 0; h < hits.length; h++) {
@@ -172,16 +194,28 @@ var combo = function(character, chains, options) {
         var dmg = move.d[hit];
         var meter = move.m[hit];
 
-        var s = Math.max(minScaling(move, dmg), scaling);
+        // Calculate scaling
+        var min = minScaling(move, hit);
+        var s = Math.max(min, scaling);
+        if (move.retroScaling && move.retroScaling.indexOf(h) >= 0) {
+          s = Math.max(min, origScaling);
+        }
+
         numHits++;
-        totalDmg += scaleDmg(s, dmg);
-        console.log('Hit ' + numHits + ': ' + scaleDmg(s, dmg) + 'dmg, Total: ' + totalDmg + 'dmg (scaling: ' + s + ')');
+        var d = scaleDmg(s, dmg);
+        totalDmg += d;
         if (!isNaN(meter) && meter !== 0) {
           if (meter > 0) {
             meterGain += scaleMeter(s, meter / 100);
           } else {
             meterDrain -= meter / 100;
           }
+        }
+
+        // Print
+        if (true) { // TODO: check verbose option
+          console.log('Hit ' + ('  ' + numHits).slice(-3) + ': ' + d + 'dmg,\tTotal: ' + totalDmg +
+              'dmg\t(scaling: ' + s + ')');
         }
 
         // Increment chain?
@@ -213,13 +247,13 @@ var combo = function(character, chains, options) {
         }
 
         // Scale damage
-        if (numHits >= 3 && !move.freeze) {
+        if (numHits >= 3 && !move.freezeScaling) {
           scaling = scale(scaling);
         }
       }
 
       // Forced damage scaling
-      if (move.s) {
+      if (move.forecdScaling) {
         scaling = Math.min(move.s, scaling);
       }
     }
