@@ -4,6 +4,7 @@
 - Ratio damage scaling
 - IPS stage 4
 - Damage unscaling for Fukua lvl 5
+- Interleaved attacks
 - Whiff meter
 - Alt damage for Tricobezoar
 - Fix retroscaling for raw supers

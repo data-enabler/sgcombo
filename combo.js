@@ -164,6 +164,7 @@ var combo = function(character, chains, options) {
   var numHits = 0, totalDmg = 0;
   var stage = 0, scaling = 1, undizzy = 0, meterGain = 0, meterDrain = 0;
   var udTriggered = false;
+  var verbose = false;
   if (typeof options == 'object') {
     stage = (options.startStage | 0) || stage;
     undizzy = options.startDrama | 0;
@@ -171,6 +172,7 @@ var combo = function(character, chains, options) {
         options.startScaling < 1) {
       scaling = options.startScaling;
     }
+    verbose = options.verbose;
   }
 
   for (var c = 0; c < chains.length; c++) {
@@ -212,12 +214,6 @@ var combo = function(character, chains, options) {
           }
         }
 
-        // Print
-        if (true) { // TODO: check verbose option
-          console.log('Hit ' + ('  ' + numHits).slice(-3) + ': ' + d + 'dmg,\tTotal: ' + totalDmg +
-              'dmg\t(scaling: ' + s + ')');
-        }
-
         // Increment chain?
         if (m === 0 && h === 0) {
           switch (stage) {
@@ -238,7 +234,14 @@ var combo = function(character, chains, options) {
 
         // Add undizzy
         var oldUndizzy = undizzy;
-        if (stage >= 3) undizzy += dizzy(move);
+        if (stage >= 3 && h === 0) undizzy += dizzy(move);
+
+        // Print
+        if (verbose) {
+          console.log('[' + stage + ']Hit ' + ('  ' + numHits).slice(-3) +
+              ': ' + d + 'dmg,\tTotal: ' + totalDmg + 'dmg,\tDrama: ' +
+              undizzy + ' (scaling: ' + s + ')');
+        }
 
         // Burst?
         if (m === 0 && stage >= 3 && oldUndizzy >= MAX_UNDIZZY) {
