@@ -1,6 +1,7 @@
 - Forced stage
 - Self-chain moves
 - DHC/Tag
+- Identify impossible combos (meter)
 - Ratio damage scaling
 - IPS stage 4
 - Damage unscaling for Fukua lvl 5
@@ -8,3 +9,4 @@
 - Whiff meter
 - Alt damage for Tricobezoar
 - Fix retroscaling for raw supers
+- Reflector projectile

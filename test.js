@@ -40,7 +40,7 @@ var tests = [
 		['j.LP', 'j.HP'],
 		['j.LK', 'j.MK'],
 		['j.MP'],
-		['s.MK', 'c.HP', 'qcf.K', 'qcb.KK'], // Note: actually whiffed M Ringlet
+		['s.MK', 'c.HP', 'qcf.MP(0)', 'qcb.KK'], // Note: actually whiffed M Ringlet
 		['s.MP', 'c.HP', 'qcf.K'],
 		['c.HK', 'dp.HP(2)', 'dp.PP']
 	]
