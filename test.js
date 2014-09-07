@@ -1,6 +1,6 @@
 var tests = [
-{
-	// https://www.youtube.com/watch?v=nxEurUTqJD0
+// Filia
+{// https://www.youtube.com/watch?v=nxEurUTqJD0
 	character:'filia',
 	hits: 31,
 	dmg: 5627,
@@ -14,8 +14,7 @@ var tests = [
 		['s.LP(1)', 's.MK', 's.HP', 'dp.PP']
 	]
 },
-{
-	// https://www.youtube.com/watch?v=-1-BaECSRZ8
+{// https://www.youtube.com/watch?v=-1-BaECSRZ8
 	character:'filia',
 	hits: 45,
 	dmg: 6596,
@@ -29,8 +28,7 @@ var tests = [
 		['s.LP', 's.MP', 'c.MK(4)', 'c.HP', 'qcb.HK', 'dp.PP']
 	]
 },
-{
-	// https://www.youtube.com/watch?v=mOz4qSlWlVY
+{// https://www.youtube.com/watch?v=mOz4qSlWlVY
 	character:'filia',
 	hits: 35,
 	dmg: 5515,
@@ -44,36 +42,116 @@ var tests = [
 		['s.MP', 'c.HP', 'qcf.K'],
 		['c.HK', 'dp.HP(2)', 'dp.PP']
 	]
+},
+
+// Cerebella
+{// https://www.youtube.com/watch?v=r0Gnf0TQqig
+	character:'cerebella',
+	hits: 43,
+	dmg: 9194,
+	drama: 305,
+	combo: [
+		['c.LK', 'c.MP', 's.HP', 'run.MK'],
+		['c.MK'],
+		['j.MP', 'j.HK'],
+		['s.MP', 'qcb.Throw'],
+		['c.LK', 'c.MP', 'c.HP'],
+		['j.LP(8)', 'j.HP'],
+		['c.LP', 'c.MP', 's.HK', 'dp.HP', 'qcf.PP']
+	]
+},
+{// https://www.youtube.com/watch?v=OOWcJkQ6jao
+	character:'cerebella',
+	hits: 35,
+	dmg: 7752,
+	drama: 310,
+	burst: true,
+	combo: [
+		['c.LK', 'c.MK', 'c.HP'],
+		['j.MP', 'j.MK', 'j.HP'],
+		['s.LK', 'c.HP'],
+		['j.LP(1)', 'j.HP'],
+		['j.LK', 'j.HK'],
+		['s.LP', 's.MP', 's.HK', 'dp.HP', 'qcf.PP'],
+		['dp.MP']
+	]
+},
+{// https://www.youtube.com/watch?v=OOWcJkQ6jao
+	character:'cerebella',
+	hits: 23,
+	dmg: 6368,
+	drama: 95,
+	combo: [
+		['j.HK'],
+		['c.LK', 'c.MK'],
+		['j.d.MP'],
+		['c.LK', 'c.MK', 'run.MK'],
+		['dp.Throw', 'qcf.PP'],
+	]
+},
+{// https://www.youtube.com/watch?v=wYxi5K9nmKY
+	character:'cerebella',
+	hits: 41,
+	dmg: 7982,
+	drama: 320,
+	combo: [
+		['c.LK', 'c.MP', 'c.HP'],
+		['j.MK', 'j.HK'],
+		['c.LK', 'c.MK'],
+		['j.MP', 'j.HK'],
+		['s.HP', 'run.Throw'],
+		['c.MP', 's.HP', 'run.LK'],
+		['s.LP', 's.MP', 's.HK', 'dp.HP', 'qcf.PP']
+	]
+},
+{// Did it myself...
+	character:'cerebella',
+	hits: 47,
+	dmg: 5969,
+	drama: 300,
+	combo: [
+		['j.Throw'],
+		['j.LP(1)'],
+		['c.MK'],
+		['j.MP', 'j.HK'],
+		['s.HP', 'run.Throw'],
+		['c.MP', 'c.HP'],
+		['j.LP(6)', 'j.HP'],
+		['s.LP', 's.MK', 's.HK', 'dp.HP', 'qcf.PP']
+	]
 }
 ];
 
-var runTest = function(test, name) {
+var check = function(expected, got, name) {
+	if (expected != got) {
+		console.log('Wrong ' + name + ': expected ' + expected + ', got ' + got);
+		return false;
+	}
+	return true;
+};
+
+var runTest = function(test, name, verbose) {
 	var fail = false;
-	var result = combo(characters[test.character], test.combo, test.options);
-	if (test.hits != result.Hits) {
-		console.log('Wrong # of hits: expected ' + test.hits + ', got ' + result.Hits);
-		fail = true;
-	}
-	if (test.dmg != result.Damage) {
-		console.log('Wrong damage: expected ' + test.dmg + ', got ' + result.Damage);
-		fail = true;
-	}
-	if (test.drama != result.Drama) {
-		console.log('Wrong drama: expected ' + test.drama + ', got ' + result.Drama);
-		fail = true;
-	}
+	var opt = test.options ? Object.create(test.options) : {};
+	if (verbose) { opt.verbose = true; }
+	var result = combo(characters[test.character], test.combo, opt);
+
+	fail = !check(test.hits, result.Hits, '# of hits') || fail;
+	fail = !check(test.dmg, result.Damage, 'damage') || fail;
+	fail = !check(test.drama, result.Drama, 'drama') || fail;
+	var burst = test.burst ? true : false;
+	fail = !check(burst, result['Infinity Breaker Triggered'], 'burst') || fail;
 	if (fail) {
 		console.log('Test ' + name + ' failed');
-		test.options = test.options || {};
-		test.options.verbose = true;
-		combo(characters[test.character], test.combo, test.options);
+		opt.verbose = true;
+		combo(characters[test.character], test.combo, opt);
 	}
 	return !fail;
 };
 
-var runTests = function() {
+var runTests = function(verbose) {
 	for (var i = 0; i < tests.length; i++) {
-		if (!runTest(tests[i], i)) {
+		if (!runTest(tests[i], i + 1, verbose)) {
 			return;
 		}
 	}

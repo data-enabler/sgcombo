@@ -10,3 +10,4 @@
 - Alt damage for Tricobezoar
 - Fix retroscaling for raw supers
 - Reflector projectile
+- Grab bag # of hits
