@@ -1,9 +1,9 @@
-- Forced stage
-- Self-chain moves
 - DHC/Tag
+- Assists
+- Self-chain moves
 - Identify impossible combos (meter)
-- Ratio damage scaling
 - IPS stage 4
+- Forced stage?
 - Damage unscaling for Fukua lvl 5
 - Interleaved attacks
 - Whiff meter

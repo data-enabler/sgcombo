@@ -65,6 +65,32 @@ var parseAtk = function(atkStr) {
 	return atk;
 };
 
+var Command = function(action, character, move) {
+	this.action = action;
+	this.character = characters[character];
+	this.move = move;
+};
+
+var dhc = function(character, superMove) {
+	return new Command('dhc', character, superMove);
+};
+
+var delayed = function(character, move) {
+	return new Command('delayed', character, move);
+};
+
+var tag = function(character) {
+	return new Command('tag', character, 'TagIn');
+};
+
+var whiffTag = function(character) {
+	return new Command('tag', character, 'TagIn(0)');
+};
+
+var assist = function(character, move) {
+	return new Command('assist', character, move);
+};
+
 var combo = function(character, chains, options) {
 	var numHits = 0, totalDmg = 0;
 	var stage = 0, scaling = 1, undizzy = 0, meterGain = 0, meterDrain = 0;
@@ -89,8 +115,36 @@ var combo = function(character, chains, options) {
 		}
 
 		for (var m = 0; m < chain.length; m++) {
-			var atk = parseAtk(chain[m]);
-			var move = character.move(atk.name);
+			var command = chain[m];
+			var atk, move;
+
+			if (command instanceof Command) {
+				switch(command.action) {
+					case 'dhc':
+						scaling = Math.max(scaling, 0.8);
+						character = command.character;
+						atk = parseAtk(command.move);
+						move = character.move(atk.name);
+						break;
+					case 'tag':
+						scaling = 1;
+						character = command.character;
+						atk = parseAtk(command.move);
+						move = character.move(atk.name);
+						break;
+					case 'delayed':
+						atk = parseAtk(command.move);
+						move = command.character.move(atk.name);
+						break;
+					case 'assist':
+						// TODO: Implement
+						break;
+				}
+			} else {
+				atk = parseAtk(command);
+				move = character.move(atk.name);
+			}
+
 			var hits = atk.hits;
 
 			// Record scaling at start of move

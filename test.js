@@ -119,6 +119,18 @@ var tests = [
 		['j.LP(6)', 'j.HP'],
 		['s.LP', 's.MK', 's.HK', 'dp.HP', 'qcf.PP']
 	]
+},
+
+// Team Combos
+{// https://www.youtube.com/watch?v=L6HhJ21QjLs
+	character:'filia',
+	hits: 55,
+	dmg: 7616,
+	drama: 85,
+	combo: [
+		['s.LP', 's.MP', 'c.MK', 's.HK', 'qcb.HK', 'dp.PP', dhc('cerebella', 'qcf.PP')],
+		['c.LK', 'c.MP', 's.HK', 'dp.HP', 'qcf.PP']
+	]
 }
 ];
 
