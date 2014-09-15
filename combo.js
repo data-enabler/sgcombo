@@ -114,6 +114,7 @@ var combo = function(character, chains, options) {
 			console.log('----------');
 		}
 
+		var lastMove;
 		for (var m = 0; m < chain.length; m++) {
 			var command = chain[m];
 			var atk, move;
@@ -160,7 +161,17 @@ var combo = function(character, chains, options) {
 				var dmg = move.d[hit];
 				var meter = move.m[hit];
 
-				// Calculate scaling
+				// Scale damage
+				if (!(numHits < 3 ||
+						(lastMove && lastMove.noScale && h === 0) ||
+						(move.freezeScaling && h > 0))) {
+					scaling = scale(scaling);
+					if (lastMove && lastMove.forcedScaling && h === 0) {
+						scaling = Math.min(lastMove.forcedScaling/100, scaling);
+					}
+				}
+
+				// Calculate move scaling
 				var min = minScaling(move, hit);
 				var s = Math.max(min, scaling);
 				if (move.retroScaling && move.retroScaling.indexOf(h) >= 0) {
@@ -212,18 +223,9 @@ var combo = function(character, chains, options) {
 					udTriggered = true;
 					// End combo
 				}
-
-				// Scale damage
-				if (numHits >= 3 && !move.noScale &&
-						(!move.freezeScaling || h == hits.length - 1)) {
-					scaling = scale(scaling);
-				}
 			}
 
-			// Forced damage scaling
-			if (move.forcedScaling) {
-				scaling = Math.min(move.forcedScaling/100, scaling);
-			}
+			lastMove = move;
 		}
 	}
 

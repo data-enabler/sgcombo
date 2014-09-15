@@ -153,6 +153,8 @@ var characters = {
 		'qcf.PP':    {com:'Lvl1', d:[300..x(8), 2100].flat()},
 		'spd.Throw':   {com:'Lvl1', d:[0, 300..x(4), 100, 3500].flat(),
 			forcedScaling:50.0,
+			freezeScaling:true,
+			noScale:true,
 		},
 		'qcb.PP':   {com:'Lvl3', d:[0, 2700, 2800]},
 		// Misc

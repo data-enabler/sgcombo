@@ -76,7 +76,7 @@ var tests = [
 		['dp.MP']
 	]
 },
-{// https://www.youtube.com/watch?v=OOWcJkQ6jao
+{// https://www.youtube.com/watch?v=PS87O40A3RI
 	character:'cerebella',
 	hits: 23,
 	dmg: 6368,
@@ -122,7 +122,7 @@ var tests = [
 },
 
 // Team Combos
-{// https://www.youtube.com/watch?v=L6HhJ21QjLs
+{// Did it myself...
 	character:'filia',
 	hits: 55,
 	dmg: 7616,
@@ -130,6 +130,20 @@ var tests = [
 	combo: [
 		['s.LP', 's.MP', 'c.MK', 's.HK', 'qcb.HK', 'dp.PP', dhc('cerebella', 'qcf.PP')],
 		['c.LK', 'c.MP', 's.HK', 'dp.HP', 'qcf.PP']
+	]
+},
+{// https://www.youtube.com/watch?v=L6HhJ21QjLs
+	character:'cerebella',
+	hits: 40,
+	dmg: 14351,
+	drama: 355,
+	combo: [
+		['spd.Throw', dhc('filia', 'qcb.PP')],
+		['c.MP', 'c.HP', 'qcf.LP'],
+		['s.LK', 's.MK', 's.HP'],
+		['j.HP', 'j.HK', 'j.qcb.HK'],
+		['j.MP(4)'],
+		['s.LP', 's.LK', 's.MP', 'c.MK', 's.HK', 'qcb.HK']
 	]
 }
 ];
@@ -164,7 +178,7 @@ var runTest = function(test, name, verbose) {
 var runTests = function(verbose) {
 	for (var i = 0; i < tests.length; i++) {
 		if (!runTest(tests[i], i + 1, verbose)) {
-			return;
+			//return;
 		}
 	}
 	console.log('All tests passed');
