@@ -145,6 +145,18 @@ var tests = [
 		['j.MP(4)'],
 		['s.LP', 's.LK', 's.MP', 'c.MK', 's.HK', 'qcb.HK']
 	]
+},
+{// Did it myself...
+	character:'cerebella',
+	hits: 33,
+	dmg: 7683,
+	drama: 175,
+	combo: [
+		['c.LK', 'c.MK'],
+		['j.MP', 'j.HK'],
+		['s.MP', tag('valentine')],
+		['c.LK', 'c.MK(1)', 's.HP', 'qcf.HK', 'qcf.KK', dhc('filia', 'dp.PP')]
+	]
 }
 ];
 
