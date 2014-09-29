@@ -121,6 +121,23 @@ var tests = [
 	]
 },
 
+// Valentine
+{// TODO(mullings): Add video url when I eventually upload this
+	character:'valentine',
+	hits: 43,
+	dmg: 7599,
+	drama: 320,
+	combo: [
+		['c.LK(1)', 'c.MK(1)', 's.HP', 'qcf.HK'],
+		['s.HK', 'qcf.LK'],
+		['s.LP(1)', 'c.HP'],
+		['j.HP'],
+		['j.MP(3)', 'j.HP'],
+		['s.MK(1)', 'qcf.LK'],
+		['s.LK', 's.MP(1, 2, 3, 5, 6, 7, 8, 9)', 'c.MK', 's.HP', 'qcf.HK', 'qcf.KK']
+	]
+},
+
 // Team Combos
 {// Did it myself...
 	character:'filia',
@@ -155,7 +172,7 @@ var tests = [
 		['c.LK', 'c.MK'],
 		['j.MP', 'j.HK'],
 		['s.MP', tag('valentine')],
-		['c.LK', 'c.MK(1)', 's.HP', 'qcf.HK', 'qcf.KK', dhc('filia', 'dp.PP')]
+		['c.LK(1)', 'c.MK(1)', 's.HP', 'qcf.HK', 'qcf.KK', dhc('filia', 'dp.PP')]
 	]
 }
 ];
