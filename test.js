@@ -38,7 +38,7 @@ var tests = [
 		['j.LP', 'j.HP'],
 		['j.LK', 'j.MK'],
 		['j.MP'],
-		['s.MK', 'c.HP', 'qcf.MP(0)', 'qcb.KK'], // Note: actually whiffed M Ringlet
+		['s.MK', 'c.HP', 'qcf.MP(0)', 'qcb.KK'],
 		['s.MP', 'c.HP', 'qcf.K'],
 		['c.HK', 'dp.HP(2)', 'dp.PP']
 	]
@@ -207,7 +207,7 @@ var runTest = function(test, name, verbose) {
 var runTests = function(verbose) {
 	for (var i = 0; i < tests.length; i++) {
 		if (!runTest(tests[i], i + 1, verbose)) {
-			//return;
+			return;
 		}
 	}
 	console.log('All tests passed');

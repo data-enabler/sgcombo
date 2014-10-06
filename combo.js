@@ -128,7 +128,6 @@ var combo = function(character, chains, options) {
 						move = character.move(atk.name);
 						break;
 					case 'tag':
-						scaling = 1;
 						character = command.character;
 						atk = parseAtk(command.move);
 						move = character.move(atk.name);
