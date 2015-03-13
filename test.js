@@ -138,6 +138,23 @@ var tests = [
 	]
 },
 
+// Valentine (Beta)
+{// https://www.youtube.com/watch?v=irdejo0ezQ0
+	character:'valentineBeta',
+	hits: 49,
+	dmg: 8622,
+	drama: 355,
+	combo: [
+		['c.LK(1)', 'c.MK(1)', 's.HP', 'qcf.HK'],
+		['c.HP', 'j.qcf.LK'],
+		['j.HP', 'j.qcf.HK'],
+		['s.LK', 'c.HP'],
+		['j.HK', 'j.qcf.HK'],
+		['j.MK', 'j.qcf.MK'],
+		['s.LP', 'c.LK', 's.MP', 'c.MK', 's.HP', 'qcf.HK', 'qcf.KK']
+	]
+},
+
 // Team Combos
 {// Did it myself...
 	character:'filia',

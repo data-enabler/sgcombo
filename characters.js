@@ -5,12 +5,16 @@ var Character = function(name, moveset) {
 
 Character.prototype.move = function(name) {
 	var move = this.moveset[name];
+
 	if (!move) {
 		console.log('Can\'t find move ' + this.name + '[' + name + ']');
 		return move;
 	}
+
 	if (!move.com && !move.ref) { return move; }
 
+	// The move references another (either from the current character, another
+	// character, or the common base), so use that as the base for this move.
 	var ref = move.char ?
 			characters[move.char].move(move.ref) :
 			(
@@ -18,10 +22,15 @@ Character.prototype.move = function(name) {
 					characters.common.move(move.com) :
 					this.move(move.ref)
 			);
+
+	// Create new object with reference as the prototype
 	var ret = Object.create(ref);
+
+	// Override move properties
 	for (var prop in move) {
 		ret[prop] = move[prop];
 	}
+
 	return ret;
 };
 
@@ -244,3 +253,11 @@ var characters = {
 		'Snap':  {com:'Snap'}
 	})
 };
+
+characters.valentineBeta = new Character('Valentine (Beta)', (function() {
+	var moveset = Object.create(characters.valentine.moveset);
+	moveset['j.qcf.LK'] = {char:'valentine', ref:'j.qcf.LK', d:[750]};
+	moveset['j.qcf.MK'] = {char:'valentine', ref:'j.qcf.MK', d:[825]};
+	moveset['j.qcf.HK'] = {char:'valentine', ref:'j.qcf.HK', d:[900]};
+	return moveset;
+})());

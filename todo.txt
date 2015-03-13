@@ -1,8 +1,8 @@
-- DHC/Tag
+- Fix/test retroscaling
 - Assists
-- Self-chain moves
+- Improve notation for self-chain moves?
 - Identify impossible combos (meter)
-- IPS stage 4
+- IPS stage 4 (note: SJC in 3 puts you in 5)
 - Forced stage?
 - Damage unscaling for Fukua lvl 5
 - Interleaved attacks
