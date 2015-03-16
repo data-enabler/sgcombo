@@ -7,6 +7,7 @@ var $chainTemplate;
 var $moveTemplate;
 var $moveSelectTemplate;
 
+var $infoHits;
 var $infoDamage;
 var $infoTensionGain;
 var $infoDrama;
@@ -64,6 +65,7 @@ $(function() {
 	$moveTemplate = $($('#js-move-template').html());
 	$moveSelectTemplate = $($('#js-move-select-template').html());
 
+	$infoHits = $('.js-info-hits');
 	$infoDamage = $('.js-info-damage');
 	$infoTensionGain = $('.js-info-tension-gain');
 	$infoDrama = $('.js-info-drama');
@@ -157,6 +159,7 @@ var updateInfo = function() {
 	var results = combo(
 		characters[currentCharacter],
 		pruneCombo(currentCombo));
+	$infoHits.html(results.hits);
 	$infoDamage.html(results.damage);
 	$infoTensionGain.html(results.tensionGain);
 	$infoDrama.html(results.drama);
