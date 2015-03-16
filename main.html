@@ -1,8 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <meta charset="UTF-8">
+<title>SkullCombo</title>
+
+<!-- Scripts -->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script type="text/javascript" src="util.js"></script>
 <script type="text/javascript" src="characters.js"></script>
 <script type="text/javascript" src="combo.js"></script>
 <script type="text/javascript" src="test.js"></script>
+<script type="text/javascript" src="interface.js"></script>
+
+<!-- Stylesheets -->
+<link rel="stylesheet" href="sgcombo.css">
+
+<!-- Templates -->
+<script id="js-chain-template" type="text/template">
+	<div class="js-chain chain">
+		<button class="js-insert-chain add-chain">Insert Chain</button>
+		<div class="js-moves moves">
+			<button class="js-append-move add-move">+</button>
+		</div>
+		<button class="js-remove-chain remove-chain">Remove Chain</button>
+	</div>
+</script>
+<script id="js-move-template" type="text/template">
+	<div class="js-move move">
+		<button class="js-insert-move add-move">+</button>
+		<span class="js-move-token move-token">Select a Move</span>
+		<button class="js-remove-move remove-move">-</button>
+	</div>
+</script>
+<script id="js-move-select-template" type="text/template">
+	<select class="js-move-select move-select"></select>
+</script>
+
+<body>
+	<div id="info">
+		<p>Damage: <span class="js-info-damage"></span></p>
+		<p>Tension Gain: <span class="js-info-tension-gain"></span></p>
+		<p>Drama: <span class="js-info-drama"></span></p>
+	</div>
+	<div id="editor">
+		<div><button class="js-append-chain add-chain">Add Chain</button></div>
+	</div>
+</body>
 </html>

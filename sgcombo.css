@@ -1,0 +1,29 @@
+.chain {
+	padding: 4px;
+	margin: 4px;
+
+	background-color: cyan;
+}
+
+.moves {
+	display: inline-block;
+	padding: 4px;
+	margin: 4px;
+
+	background-color: magenta;
+}
+
+.move {
+	display: inline-block;
+	padding: 4px;
+	margin: 4px;
+
+	background-color: yellow;
+}
+
+.move-token {
+	padding: 4px;
+	margin: 4px;
+
+	background-color: white;
+}

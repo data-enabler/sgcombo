@@ -3,11 +3,14 @@
 - Improve notation for self-chain moves?
 - Identify impossible combos (meter)
 - IPS stage 4 (note: SJC in 3 puts you in 5)
+- meter gain for defender
+- Revisit Showstopper DHCs (since Mike fixed it)
 - Forced stage?
 - Damage unscaling for Fukua lvl 5
 - Interleaved attacks
 - Whiff meter
 - Alt damage for Tricobezoar
+- Showstopper xx Devil Horns
 - Fix retroscaling for raw supers
 - Reflector projectile
 - Grab bag # of hits

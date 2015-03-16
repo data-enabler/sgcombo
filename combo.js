@@ -229,14 +229,14 @@ var combo = function(character, chains, options) {
 	}
 
 	var result = {
-		'Hits': numHits,
-		'Damage': totalDmg,
-		'Tension Gain': +meterGain.toFixed(3),
-		'Tension Drain': +meterDrain.toFixed(3),
-		'Net Tension': +(meterGain - meterDrain).toFixed(3),
-		'Drama': undizzy,
-		'Infinity Breaker Triggered': udTriggered,
-		'IPS Stage': stage
+		'hits': numHits,
+		'damage': totalDmg,
+		'tensionGain': +meterGain.toFixed(3),
+		'tensionDrain': +meterDrain.toFixed(3),
+		'netTension': +(meterGain - meterDrain).toFixed(3),
+		'drama': undizzy,
+		'ipsTriggered': udTriggered,
+		'ipsStage': stage
 	};
 
 	// Print

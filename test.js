@@ -208,11 +208,11 @@ var runTest = function(test, name, verbose) {
 	if (verbose) { opt.verbose = true; }
 	var result = combo(characters[test.character], test.combo, opt);
 
-	fail = !check(test.hits, result.Hits, '# of hits') || fail;
-	fail = !check(test.dmg, result.Damage, 'damage') || fail;
-	fail = !check(test.drama, result.Drama, 'drama') || fail;
+	fail = !check(test.hits, result.hits, '# of hits') || fail;
+	fail = !check(test.dmg, result.damage, 'damage') || fail;
+	fail = !check(test.drama, result.drama, 'drama') || fail;
 	var burst = test.burst ? true : false;
-	fail = !check(burst, result['Infinity Breaker Triggered'], 'burst') || fail;
+	fail = !check(burst, result.ipsTriggered, 'burst') || fail;
 	if (fail) {
 		console.log('Test ' + name + ' failed');
 		opt.verbose = true;
