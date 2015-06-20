@@ -251,5 +251,67 @@ var characters = {
 		// Misc
 		'TagIn': {com:'TagIn'},
 		'Snap':  {com:'Snap'}
+	}),
+
+	bigBand: new Character('Big Band', {
+		// Standing
+		's.LP': {com:'L', d:[300, 300], m:[2.5, 2.5]},
+		's.MP': {com:'M', d:[700, 75..x(4)].flat(), m:[7.5, 0.0.x(4)].flat()},
+		's.HP': {com:'H', d:[950]},
+		's.LK': {com:'L', d:[270, 325], m:[2.5, 2.5]},
+		's.MK': {com:'M', d:[600, 650], m:[3.8, 3.8]},
+		's.HK': {com:'H', d:[950]},
+		// Crouching
+		'c.LP': {com:'L', d:[250, 100..x(5)].flat(), m:[2.5, 1.0.x(5)].flat()},
+		'c.MP': {com:'M', d:[550, 700], m:[3.8, 3.8]},
+		'c.HP': {com:'H', d:[1000]},
+		'c.LK': {com:'L', d:[325]},
+		'c.MK': {com:'M', d:[750]},
+		'c.HK': {com:'H', d:[1200]},
+		// Air
+		'j.LP': {com:'L', d:[400]},
+		'j.MP': {com:'M', d:[650]},
+		'j.HP': {com:'H', d:[900]},
+		'j.LK': {com:'L', d:[200, 200, 200], m:[2.0, 2.0, 2.0]},
+		'j.MK': {com:'M', d:[400, 350..x(4)].flat(), m:[7.5, 1.6.x(4)].flat()},
+		'j.HK': {com:'H', d:[1200]},
+		// Throws
+		'Throw':   {com:'Throw', d:[0, 150..x(8)].flat(), m:[5.0, 1.0.x(8)].flat()},
+		'j.Throw': {com:'Throw', d:[0, 350, 1000], m:[5.0, 2.0, 6.0]},
+		// Specials
+		'dp.LP':    {t:'S', d:[350, 350, 150..x(9)].flat(), m:[3.0, 3.0, 0.8.x(9)].flat()},
+		'dp.MP':    {t:'S', d:[350, 550, 150..x(11)].flat(), m:[4.5, 4.5, 0.8.x(11)].flat()},
+		'dp.HP':    {t:'S', d:[350, 350, 550, 150..x(14)].flat(), m:[4.5, 4.5, 3.0, 0.8.x(14)].flat()},
+		'qcb.LK':   {t:'S', d:[650], m:[4.5]},
+		'qcb.MK':   {t:'S', d:[800], m:[4.5]},
+		'qcb.HK':   {t:'S', d:[950], m:[4.5]},
+		'sb.LP':    {t:'S', d:[900], m:[4.5]},
+		'sb.MP':    {t:'S', d:[1300], m:[4.5]},
+		'sb.HP':    {t:'S', d:[1750], m:[4.5]},
+		'sb.LK':    {t:'S', d:[0, 350, 1000], m:[2.5, 3.0, 14.0],
+			forcedScaling:50.0,
+			freezeScaling:true,
+		},
+		'sb.MK':    {ref:'sb.LK', d:[0, 350, 450, 1000], m:[4.5, 2.5, 3.0, 10.0]},
+		'sb.HK':    {ref:'sb.LK', d:[0, 350, 450, 500, 1000], m:[4.5, 2.5, 3.0, 3.0, 10.0]},
+		'sb.P~K':   {t:'X', d:[], m:[]},
+		'sb.K~P':   {t:'X', d:[], m:[]},
+		'j.qcb.LK': {t:'S', d:[700], m:[7.5]},
+		'j.qcb.MK': {t:'S', d:[400, 500], m:[4.5, 4.5]},
+		'j.qcb.HK': {t:'S', d:[350, 400, 450], m:[2.87, 2.87, 2.87]},
+		// Supers
+		'qcf.PP':           {com:'Lvl1', d:[600, 600, 600, 2300]},
+		'qcf.PP[Taunt]':    {com:'Lvl1', d:[600..x(4), 475..x(12), 2300].flat()},
+		'j.qcf.KK':         {com:'Lvl1', d:[275..x(15), 1200].flat()},
+		'j.qcf.KK[Taunt]':  {com:'Lvl1', d:[275..x(15), 0, 250, 1400, 0].flat(),
+			minScaling:{16:1.0, 17:1.0}
+		},
+		'qcb.PP':           {com:'Lvl3', d:[550..x(7), 110..x(60)].flat()},
+		'qcb.PP[Big Band]': {com:'Lvl3', d:[550..x(7), 110..x(76)].flat()},
+		'qcb.PP[Corner]':   {com:'Lvl3', d:[550..x(4), 110..x(46)].flat()},
+		'Level5':           {com:'Lvl5', d:[400..x(20), 4500].flat()},
+		// Misc
+		'TagIn': {com:'TagIn'},
+		'Snap':  {com:'Snap'}
 	})
 };

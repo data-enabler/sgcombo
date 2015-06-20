@@ -2,6 +2,7 @@ var MAX_UNDIZZY = 240,
 		MIN_SCALING = 0.2,
 		MIN_HEAVY_SCALING = 0.275,
 		MIN_LVL3_SCALING = 0.45;
+		MIN_LVL5_SCALING = 0.55;
 var SCALING_RATE = 0.875;
 var UD = { L:15, M:20, H:30, S:20, X:0 };
 
@@ -17,6 +18,7 @@ var minScaling = function(move, hit) {
 	if (move.minScaling && move.minScaling[hit]) {
 		return move.minScaling[hit];
 	}
+	if (move.lv == 5) { return MIN_LVL5_SCALING; }
 	if (move.lv == 3) { return MIN_LVL3_SCALING; }
 	if (move.d[hit] >= 1000) { return MIN_HEAVY_SCALING; }
 	return MIN_SCALING;
@@ -36,7 +38,7 @@ var scaleMeter = function(scaling, baseMeter) {
 };
 
 var parseAtk = function(atkStr) {
-	var found = atkStr.match(/^([A-Za-z\.]+)(?:\(([\d,\s]+)\))?$/);
+	var found = atkStr.match(/^([A-Za-z0-9_~\.\[\]]+)(?:\(([\d,\s]+)\))?$/);
 	if (!found) {
 		console.log('Error parsing "' + atkStr + '"');
 		return null;

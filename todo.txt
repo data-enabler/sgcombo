@@ -1,16 +1,39 @@
-- Fix/test retroscaling
+General
 - Assists
 - Improve notation for self-chain moves?
-- Identify impossible combos (meter)
-- IPS stage 4 (note: SJC in 3 puts you in 5)
-- meter gain for defender
-- Revisit Showstopper DHCs (since Mike fixed it)
-- Forced stage?
-- Damage unscaling for Fukua lvl 5
 - Interleaved attacks
-- Whiff meter
-- Alt damage for Tricobezoar
-- Showstopper xx Devil Horns
+
+IPS
+- Forced stage
+- IPS stage 4 (note: SJC in 3 puts you in 5)
+
+Damage
+- Counter-hit damage
+- Fix retroscaling for DHCs
 - Fix retroscaling for raw supers
-- Reflector projectile
+
+Meter
+- Wow, I was reading the info on SRK wrong. Add whiff meter to all values
+- Actually verify meter gain calculation
+- Meter gain for defender
+- Identify impossible combos (meter)
+- Whiff meter
+- Run-stop meter?
+
+Filia
+- Alt damage for Tricobezoar
+
+Cerebella
+- Revisit Showstopper DHCs (since Mike fixed it)
+- Showstopper xx Devil Horns
 - Grab bag # of hits
+- Reflector projectile
+
+Valentine
+- Poison damage
+
+Fukua
+- Damage unscaling for Fukua lvl 5
+
+Big Band
+- Check meter gain on A-Train

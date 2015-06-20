@@ -166,6 +166,95 @@ var tests = [
 	]
 },
 
+// Big Band
+{
+	character:'bigBand',
+	hits: 50,
+	dmg: 4466,
+	drama: 0,
+	combo: [['qcb.PP[Corner]']]
+},
+{
+	character:'bigBand',
+	hits: 21,
+	dmg: 7692,
+	drama: 0,
+	combo: [['Level5']]
+},
+{// https://www.youtube.com/watch?v=IPCiakrXkCI
+	character:'bigBand',
+	hits: 67,
+	dmg: 14348,
+	drama: 320,
+	combo: [
+		['c.LK', 'c.MK', 's.HP'],
+		['j.MP', 'j.HP', 'j.HK'],
+		['c.HK', 'dp.HP(15)'],
+		['j.LK', 'j.MK(1)'],
+		['s.MK(1)'],
+		['j.LP', 'j.LK', 'j.MK(1)'],
+		['c.LP', 'c.MP', 's.HP', 'sb.HK', 'Level5']
+	]
+},
+{// https://www.youtube.com/watch?v=5chaL46ThXw
+	character:'bigBand',
+	hits: 35,
+	dmg: 8153,
+	drama: 275,
+	combo: [
+		['c.LK', 'c.MK', 'c.HP'],
+		['c.MK', 's.HK', 'sb.MP'],
+		['c.MP', 's.HK', 'sb.P~K'],
+		['s.LP(1)', 'c.MP', 's.HP'],
+		['j.MP', 'j.HK', 'j.qcf.KK'],
+		['j.MK(1)', 'j.qcb.HK']
+	]
+},
+/*{// https://www.youtube.com/watch?v=5chaL46ThXw
+	character:'bigBand',
+	hits: 35,
+	dmg: 8316,
+	drama: 250,
+	options: { counterhit: true },
+	combo: [
+		['c.LK', 'c.MK', 'c.HP'],
+		['c.MK', 's.HK', 'sb.MP'],
+		['c.MP', 's.HK', 'sb.P~K'],
+		['s.LP(1)', 'c.MP', 's.HP'],
+		['j.MP', 'j.HK', 'j.qcf.KK'],
+		['j.MK(1)', 'j.qcb.HK']
+	]
+},*/
+{// https://www.youtube.com/watch?v=5chaL46ThXw
+	character:'bigBand',
+	hits: 86,
+	dmg: 11590,
+	drama: 275,
+	combo: [
+		['c.LK', 'c.MK', 'c.HP'],
+		['c.MK', 's.HK', 'sb.MP'],
+		['c.MP', 's.HK', 'sb.P~K'],
+		['s.LP(1)', 'c.MP', 's.HP'],
+		['j.MP', 'j.HK', 'j.qcf.KK'],
+		['j.MK(1)', 'sb.MK', 'qcb.PP[Corner]']
+	]
+},
+/*{// https://www.youtube.com/watch?v=5chaL46ThXw
+	character:'bigBand',
+	hits: 86,
+	dmg: 11753,
+	drama: 250,
+	options: { counterhit: true },
+	combo: [
+		['c.LK', 'c.MK', 'c.HP'],
+		['c.MK', 's.HK', 'sb.MP'],
+		['c.MP', 's.HK', 'sb.P~K'],
+		['s.LP(1)', 'c.MP', 's.HP'],
+		['j.MP', 'j.HK', 'j.qcf.KK'],
+		['j.MK(1)', 'sb.MK', 'qcb.PP[Corner]']
+	]
+},*/
+
 // Team Combos
 {// Did it myself...
 	character:'filia',
@@ -217,7 +306,8 @@ var runTest = function(test, name, verbose) {
 	var fail = false;
 	var opt = test.options ? Object.create(test.options) : {};
 	if (verbose) { opt.verbose = true; }
-	var result = combo(characters[test.character], test.combo, opt);
+	var character = characters[test.character];
+	var result = combo(character, test.combo, opt);
 
 	fail = !check(test.hits, result.hits, '# of hits') || fail;
 	fail = !check(test.dmg, result.damage, 'damage') || fail;
@@ -225,7 +315,7 @@ var runTest = function(test, name, verbose) {
 	var burst = test.burst ? true : false;
 	fail = !check(burst, result.ipsTriggered, 'burst') || fail;
 	if (fail) {
-		console.log('Test ' + name + ' failed');
+		console.log('Test ' + name + ' (' + character.name + ') failed');
 		opt.verbose = true;
 		combo(characters[test.character], test.combo, opt);
 	}
@@ -233,13 +323,13 @@ var runTest = function(test, name, verbose) {
 };
 
 var runTests = function(verbose) {
-	var passed = true;
+	var failed = 0;
 	for (var i = 0; i < tests.length; i++) {
-		passed = runTest(tests[i], i + 1, verbose) && passed;
+		failed += !runTest(tests[i], i + 1, verbose);
 	}
-	if (passed) {
+	if (failed === 0) {
 		console.log('All tests passed');
 	} else {
-		console.log('Some tests failed');
+		console.log(failed + ' test(s) failed');
 	}
 };
