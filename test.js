@@ -154,6 +154,17 @@ var tests = [
 		['s.LP', 'c.LK', 's.MP', 'c.MK', 's.HP', 'qcf.HK', 'qcf.KK']
 	]
 },
+{// Did it myself
+	character:'valentineBeta',
+	hits: 20,
+	dmg: 5185,
+	drama: 80,
+	combo: [
+		['j.HP', 'j.qcf.HK'],
+		['c.HP'],
+		['j.HP', 'j.HK', 'j.qcf.MK', 'j.qcf.KK']
+	]
+},
 
 // Team Combos
 {// Did it myself...

@@ -165,9 +165,9 @@ var combo = function(character, chains, options) {
 						(lastMove && lastMove.noScale && h === 0) ||
 						(move.freezeScaling && h > 0))) {
 					scaling = scale(scaling);
-					if (lastMove && lastMove.forcedScaling && h === 0) {
-						scaling = Math.min(lastMove.forcedScaling/100, scaling);
-					}
+				}
+				if (lastMove && lastMove.forcedScaling && h === 0) {
+					scaling = Math.min(lastMove.forcedScaling/100, scaling);
 				}
 
 				// Calculate move scaling

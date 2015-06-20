@@ -97,8 +97,8 @@ var characters = {
 			minScaling:{8:0.34}
 		},
 		'qcb.KK':   {com:'Lvl1', d:[300..x(4), 1750].flat()},
-		'j.qcb.KK': {ref:'qcb.KK'},
-		'qcb.PP':   {com:'Lvl1', d:[4750]},
+		'j.qcb.KK': {com:'Lvl1', d:[250..x(4), 1250].flat()},
+		'qcb.PP':   {com:'Lvl3', d:[4750]},
 		// Misc
 		'TagIn': {com:'TagIn'},
 		'Snap':  {com:'Snap'}
@@ -242,7 +242,7 @@ var characters = {
 		'qcf.PP':   {com:'Lvl1', d:[450..x(8)].flat()},
 		'j.qcf.PP': {ref:'qcf.PP'},
 		'qcf.KK':   {com:'Lvl1', d:[275..x(12), 1850].flat()},
-		'j.qcf.KK': {ref:'qcf.KK'},
+		'j.qcf.KK': {com:'Lvl1', d:[240..x(12), 1750].flat()},
 		'rdp.KK(Orange)': {com:'Lvl2', d:[2250]},
 		'rdp.KK(Purple)': {ref:'rdp.KK(Orange)'},
 		'rdp.KK(Green)':  {ref:'rdp.KK(Orange)'},
@@ -256,8 +256,8 @@ var characters = {
 
 characters.valentineBeta = new Character('Valentine (Beta)', (function() {
 	var moveset = Object.create(characters.valentine.moveset);
-	moveset['j.qcf.LK'] = {char:'valentine', ref:'j.qcf.LK', d:[750]};
-	moveset['j.qcf.MK'] = {char:'valentine', ref:'j.qcf.MK', d:[825]};
-	moveset['j.qcf.HK'] = {char:'valentine', ref:'j.qcf.HK', d:[900]};
+	moveset['j.qcf.LK'] = {char:'valentine', ref:'j.qcf.LK', d:[750], forcedScaling:75.0};
+	moveset['j.qcf.MK'] = {char:'valentine', ref:'j.qcf.MK', d:[825], forcedScaling:75.0};
+	moveset['j.qcf.HK'] = {char:'valentine', ref:'j.qcf.HK', d:[900], forcedScaling:75.0};
 	return moveset;
 })());
