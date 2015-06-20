@@ -234,9 +234,9 @@ var characters = {
 		'qcf.LK':    {t:'S', d:[975], m:[10.1]},
 		'qcf.MK':    {t:'S', d:[1110], m:[10.1]},
 		'qcf.HK':    {t:'S', d:[1275], m:[10.1]},
-		'j.qcf.LK':  {t:'S', d:[900], m:[10.1]},
-		'j.qcf.MK':  {t:'S', d:[1000], m:[10.1]},
-		'j.qcf.HK':  {t:'S', d:[1100], m:[10.1]},
+		'j.qcf.LK':  {t:'S', d:[750], m:[10.1], forcedScaling:75.0},
+		'j.qcf.MK':  {t:'S', d:[825], m:[10.1], forcedScaling:75.0},
+		'j.qcf.HK':  {t:'S', d:[900], m:[10.1], forcedScaling:75.0},
 		'qcb.Throw': {t:'S', d:[0, 0, 1200], m:[7.0, 3.0, 8.0]},
 		// Supers
 		'qcf.PP':   {com:'Lvl1', d:[450..x(8)].flat()},
@@ -253,11 +253,3 @@ var characters = {
 		'Snap':  {com:'Snap'}
 	})
 };
-
-characters.valentineBeta = new Character('Valentine (Beta)', (function() {
-	var moveset = Object.create(characters.valentine.moveset);
-	moveset['j.qcf.LK'] = {char:'valentine', ref:'j.qcf.LK', d:[750], forcedScaling:75.0};
-	moveset['j.qcf.MK'] = {char:'valentine', ref:'j.qcf.MK', d:[825], forcedScaling:75.0};
-	moveset['j.qcf.HK'] = {char:'valentine', ref:'j.qcf.HK', d:[900], forcedScaling:75.0};
-	return moveset;
-})());

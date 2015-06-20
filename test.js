@@ -140,7 +140,7 @@ var tests = [
 
 // Valentine (Beta)
 {// https://www.youtube.com/watch?v=irdejo0ezQ0
-	character:'valentineBeta',
+	character:'valentine',
 	hits: 49,
 	dmg: 8622,
 	drama: 355,
@@ -155,7 +155,7 @@ var tests = [
 	]
 },
 {// Did it myself
-	character:'valentineBeta',
+	character:'valentine',
 	hits: 20,
 	dmg: 5185,
 	drama: 80,
@@ -233,10 +233,13 @@ var runTest = function(test, name, verbose) {
 };
 
 var runTests = function(verbose) {
+	var passed = true;
 	for (var i = 0; i < tests.length; i++) {
-		if (!runTest(tests[i], i + 1, verbose)) {
-			return;
-		}
+		passed = runTest(tests[i], i + 1, verbose) && passed;
 	}
-	console.log('All tests passed');
+	if (passed) {
+		console.log('All tests passed');
+	} else {
+		console.log('Some tests failed');
+	}
 };
