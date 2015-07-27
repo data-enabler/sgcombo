@@ -1,1 +1,2 @@
+- bug with some of the characters?
 - figure out something for multi-hit moves

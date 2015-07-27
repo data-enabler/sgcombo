@@ -1,7 +1,9 @@
-var currentCharacter = 'filia';
+var currentCharacter;
 var currentCombo = [];
 
 var $editor;
+
+var $charSelect;
 
 var $chainTemplate;
 var $moveTemplate;
@@ -70,8 +72,27 @@ $(function() {
 	$infoTensionGain = $('.js-info-tension-gain');
 	$infoDrama = $('.js-info-drama');
 
+	initCharacterSelect();
+	$charSelect.change(setCharacter);
+
 	updateInfo();
 });
+
+var initCharacterSelect = function() {
+	$charSelect = $('.js-select-character');
+	for (var c in characters) {
+		if (c == 'common') continue;
+		$('<option/>')
+			.attr('value', c)
+			.text(characters[c].name)
+			.appendTo($charSelect);
+	}
+};
+
+var setCharacter = function() {
+	currentCharacter = $charSelect.val();
+	clearCurrentCombo();
+};
 
 var getChainTemplate = function() {
 	return $chainTemplate.clone();
@@ -141,6 +162,13 @@ var pruneCombo = function(combo) {
 		}
 	}
 	return c;
+};
+
+var clearCurrentCombo = function() {
+	currentCombo = [];
+	$editor
+		.children('.js-chain')
+		.remove();
 };
 
 var setMove = function(chainNum, moveNum, move) {
