@@ -226,7 +226,9 @@ var combo = function(character, chains, options) {
 				}
 			}
 
-			lastMove = move;
+			if (hits.length > 0) {
+				lastMove = move;
+			}
 		}
 	}
 

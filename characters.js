@@ -178,6 +178,76 @@ var characters = {
 		'Snap':  {com:'Snap'}
 	}),
 
+	painwheel: new Character('Painwheel', {
+		// Standing
+		's.LP': {com:'L', d:[325]},
+		's.MP': {com:'M', d:[675]},
+		's.HP': {com:'H', d:[900]},
+		's.HP[Charged]': {com:'H', d:[1100]},
+		's.LK': {com:'L', d:[375]},
+		's.MK': {com:'M', d:[200, 200, 200, 500], m:[1.7.x(4)].flat()},
+		's.HK': {com:'H', d:[300, 400, 500], m:[3.3, 3.3, 3.3]},
+		// Crouching
+		'c.LP': {com:'L', d:[325]},
+		'c.MP': {com:'M', d:[210, 210, 210, 350], m:[1.7.x(4)].flat()},
+		'c.HP': {com:'H', d:[950]},
+		'c.HP[Charged]': {com:'H', d:[1150]},
+		'c.LK': {com:'L', d:[325]},
+		'c.MK': {com:'M', d:[650]},
+		'c.HK': {com:'H', d:[900]},
+		'c.HK[Charged]': {com:'H', d:[1000]},
+		// Air
+		'j.LP': {com:'L', d:[325]},
+		'j.MP': {com:'M', d:[250, 250, 250, 425], m:[1.7.x(4)].flat()},
+		'j.HP': {com:'H', d:[300, 300, 300, 550], m:[1.7.x(4)].flat()},
+		'j.HP[Charged]': {com:'H', d:[300..x(5), 550].flat(), m:[1.7.x(6)].flat()},
+		'j.LK': {com:'L', d:[350]},
+		'j.MK': {com:'M', d:[650]},
+		'j.HK': {com:'H', d:[225..x(6)].flat(), m:[1.5.x(6)].flat()},
+		// Command Normals
+		'f.HK':   {com:'H', d:[300, 250, 250, 720], m:[2.6.x(4)].flat()},
+		// Throws
+		'Throw':          {com:'Throw', d:[0, 1000], m:[0.0, 15.0]},
+		'Throw[Install]': {com:'Throw', d:[0, 1000, 1300], m:[0.0, 5.0, 10.0]},
+		'j.Throw':          {ref:'Throw'},
+		'j.Throw[Install]': {ref:'Throw[Install]'},
+		// Specials
+		'qcf.LP':   {t:'S', d:[650], m:[9.1],
+			forcedScaling:50.0,
+		},
+		'qcf.MP':   {t:'S', d:[350], m:[6.1]},
+		'qcf.HP':   {ref:'qcf.MP'},
+		'qcf.LK':   {t:'S', d:[0, 1400], m:[0.0, 7.6],
+			forcedScaling:50.0,
+			freezeScaling:true,
+		},
+		'qcf.MK':   {ref:'qcf.LK'},
+		'qcf.HK':   {ref:'qcf.LK'},
+		'j.qcf.LK': {ref:'qcf.LK'},
+		'j.qcf.MK': {ref:'qcf.LK'},
+		'j.qcf.HK': {ref:'qcf.LK'},
+		'qcb.K':    {t:'X', d:[], m:[]},
+		'j.qcb.K':  {t:'X', d:[], m:[]},
+		'dd.LK':    {t:'S', d:[1050], m:[7.6]},
+		'dd.MK':    {t:'S', d:[1150], m:[8.3]},
+		'dd.HK':    {t:'S', d:[1250], m:[9.1]},
+		// Supers
+		'qcf.PP':            {com:'Lvl1', d:[220..x(26)].flat()},
+		'qcf.PP[Install]':   {com:'Lvl1', d:[220..x(39)].flat()},
+		'j.qcf.KK':          {com:'Lvl1', d:[150, 150, 150, 70..x(24), 500].flat()},
+		'j.qcf.KK[Install]': {com:'Lvl1', d:[150, 150, 150, 70..x(36), 700].flat()},
+		'qcb.KK':   {com:'Lvl2', d:[], m:[]},
+		'qcb.PP':   {com:'Lvl3', d:[2000, 175..x(16), 1000].flat()},
+		// Misc
+		'TagIn':          {com:'TagIn', d:[0, 500], m:[0.0, 10.1],
+			forcedScaling:50.0,
+			freezeScaling:true,
+			forcedStage:3
+		},
+		'TagIn[Install]': {ref:'TagIn', d:[0, 500, 650], m:[0.0, 10.1, 10.0]},
+		'Snap':           {com:'Snap'}
+	}),
+
 	valentine: new Character('Valentine', {
 		// Standing
 		's.LP': {com:'L', d:[200, 200, 200], m:[2.5, 2.5, 2.5]},

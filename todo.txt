@@ -2,6 +2,7 @@ General
 - Assists
 - Improve notation for self-chain moves?
 - Interleaved attacks
+- Annotate assist-only moves
 
 IPS
 - Forced stage
@@ -28,6 +29,9 @@ Cerebella
 - Showstopper xx Devil Horns
 - Grab bag # of hits
 - Reflector projectile
+
+Painwheel
+- Allow for multi-hit M/H stinger?
 
 Valentine
 - Poison damage

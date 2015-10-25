@@ -121,6 +121,40 @@ var tests = [
 	]
 },
 
+// Painwheel
+{// https://www.youtube.com/watch?v=_MQVb1AS1_A
+	character:'painwheel',
+	hits: 61,
+	dmg: 7397,
+	drama: 335,
+	combo: [
+		['c.LK', 'c.MK', 's.HP', 'qcf.LK', 'qcb.K'],
+		['j.LK'],
+		['c.MK', 's.HP', 'qcf.LP'],
+		['s.MP'],
+		['j.MP', 'j.HP', 'j.qcb.K'],
+		['j.MK', 'j.HP(3)', 'j.HK(4)'],
+		['s.LP', 's.LK', 'c.MP', 's.HP', 'qcf.LK', 'qcf.PP']
+	]
+},
+{// https://www.youtube.com/watch?v=szLCALiXVfI
+	character:'painwheel',
+	hits: 65,
+	dmg: 8406,
+	drama: 330,
+	combo: [
+		['c.LK', 'c.MK', 'c.HP', 'qcf.HK', 'qcb.K'],
+		['j.MK', 'j.qcf.LK'],
+		['qcf.LK', 'qcb.K'],
+		['j.LK'],
+		['s.MK', 's.HK'],
+		['j.MP', 'j.qcf.LK', 'j.qcb.K'],
+		['j.LP', 'j.MK', 'j.HP'],
+		['s.LP', 's.LK', 's.MK', 's.HP', 'qcf.LK', 'qcf.PP']
+	]
+},
+// TODO(mullings): Install combos
+
 // Valentine
 {// TODO(mullings): Add video url when I eventually upload this
 	character:'valentine',
@@ -137,8 +171,6 @@ var tests = [
 		['s.LK', 's.MP(1, 2, 3, 5, 6, 7, 8, 9)', 'c.MK', 's.HP', 'qcf.HK', 'qcf.KK']
 	]
 },
-
-// Valentine (Beta)
 {// https://www.youtube.com/watch?v=irdejo0ezQ0
 	character:'valentine',
 	hits: 49,
@@ -266,7 +298,7 @@ var tests = [
 		['c.LK', 'c.MP', 's.HK', 'dp.HP', 'qcf.PP']
 	]
 },
-{// https://www.youtube.com/watch?v=L6HhJ21QjLs
+/*{// https://www.youtube.com/watch?v=L6HhJ21QjLs
 	character:'cerebella',
 	hits: 40,
 	dmg: 14351,
@@ -279,8 +311,8 @@ var tests = [
 		['j.MP(4)'],
 		['s.LP', 's.LK', 's.MP', 'c.MK', 's.HK', 'qcb.HK']
 	]
-},
-{// Did it myself...
+},*/
+/*{// Did it myself...
 	character:'cerebella',
 	hits: 33,
 	dmg: 7683,
@@ -291,7 +323,7 @@ var tests = [
 		['s.MP', tag('valentine')],
 		['c.LK(1)', 'c.MK(1)', 's.HP', 'qcf.HK', 'qcf.KK', dhc('filia', 'dp.PP')]
 	]
-}
+}*/
 ];
 
 var check = function(expected, got, name) {
