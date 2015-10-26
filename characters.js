@@ -203,7 +203,7 @@ var characters = {
 		'j.HP[Charged]': {com:'H', d:[300..x(5), 550].flat(), m:[1.7.x(6)].flat()},
 		'j.LK': {com:'L', d:[350]},
 		'j.MK': {com:'M', d:[650]},
-		'j.HK': {com:'H', d:[225..x(6)].flat(), m:[1.5.x(6)].flat()},
+		'j.HK': {com:'H', d:[225..x(7)].flat(), m:[1.5.x(7)].flat()},
 		// Command Normals
 		'f.HK':   {com:'H', d:[300, 250, 250, 720], m:[2.6.x(4)].flat()},
 		// Throws
@@ -234,8 +234,13 @@ var characters = {
 		// Supers
 		'qcf.PP':            {com:'Lvl1', d:[220..x(26)].flat()},
 		'qcf.PP[Install]':   {com:'Lvl1', d:[220..x(39)].flat()},
-		'j.qcf.KK':          {com:'Lvl1', d:[150, 150, 150, 70..x(24), 500].flat()},
-		'j.qcf.KK[Install]': {com:'Lvl1', d:[150, 150, 150, 70..x(36), 700].flat()},
+		'j.qcf.KK':          {com:'Lvl1', d:[150, 150, 150, 70..x(15), 500].flat(),
+			retroScaling:true
+		},
+		'j.qcf.KK[Install]': {ref:'j.qcf.KK', d:[150, 150, 150, 90..x(30), 700].flat(),
+			forcedScaling:50.0,
+			freezeScaling:true
+		},
 		'qcb.KK':   {com:'Lvl2', d:[], m:[]},
 		'qcb.PP':   {com:'Lvl3', d:[2000, 175..x(16), 1000].flat()},
 		// Misc

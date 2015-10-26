@@ -153,7 +153,40 @@ var tests = [
 		['s.LP', 's.LK', 's.MK', 's.HP', 'qcf.LK', 'qcf.PP']
 	]
 },
-// TODO(mullings): Install combos
+{// https://www.youtube.com/watch?v=RyW7bY3bd9k
+	character:'painwheel',
+	hits: 62,
+	dmg: 7825,
+	drama: 330,
+	combo: [
+		['c.LK', 'c.MK', 's.HP', 'qcf.LK', 'qcb.K'],
+		['j.LK'],
+		['c.MK', 'qcf.LK', 'qcb.K'],
+		['j.LP'],
+		['s.MP'],
+		['qcf.MK', 'qcb.K'],
+		['j.MP'],
+		['s.HP', 'qcf.LP'],
+		['j.MK', 'j.HK(7)'],
+		['s.LP', 's.LK', 'c.MP', 's.HP', 'qcf.LK', 'qcf.PP']
+	]
+},
+/*{// https://www.youtube.com/watch?v=ai_lRnVIRZM
+	character:'painwheel',
+	hits: 91,
+	dmg: 9887,
+	drama: 250,
+	combo: [
+		['c.HP[Charged]', 'qcb.KK'],
+		['c.HP', 'qcf.LK', 'qcb.K'],
+		['j.LK', 'j.qcf.HK'],
+		['j.MK', 'j.qcf.HK'],
+		['j.LP', 'j.qcf.HK'],
+		['j.HP(3)', 'j.qcf.HK'],
+		['j.MP(3)', 'j.qcf.HK', 'j.qcf.KK[Install]', 'j.qcb.K'],
+		['j.qcf.KK[Install]']
+	]
+},*/
 
 // Valentine
 {// TODO(mullings): Add video url when I eventually upload this
@@ -327,7 +360,7 @@ var tests = [
 ];
 
 var check = function(expected, got, name) {
-	if (expected != got) {
+	if (expected != undefined && expected != got) {
 		console.log('Wrong ' + name + ': expected ' + expected + ', got ' + got);
 		return false;
 	}

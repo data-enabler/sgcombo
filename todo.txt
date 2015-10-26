@@ -11,6 +11,7 @@ IPS
 Damage
 - Counter-hit damage
 - Fix retroscaling for DHCs
+- Ratio options
 - Fix retroscaling for raw supers
 
 Meter
@@ -31,7 +32,9 @@ Cerebella
 - Reflector projectile
 
 Painwheel
+- Fix scaling on install thresher
 - Allow for multi-hit M/H stinger?
+- Hatred guard damage?
 
 Valentine
 - Poison damage

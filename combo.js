@@ -175,7 +175,8 @@ var combo = function(character, chains, options) {
 				// Calculate move scaling
 				var min = minScaling(move, hit);
 				var s = Math.max(min, scaling);
-				if (move.retroScaling && move.retroScaling.indexOf(h) >= 0) {
+				if (move.retroScaling &&
+					  (move.retroScaling === true || move.retroScaling.indexOf(h) >= 0)) {
 					s = Math.max(min, origScaling);
 				}
 
