@@ -38,7 +38,7 @@ var scaleMeter = function(scaling, baseMeter) {
 };
 
 var parseAtk = function(atkStr) {
-	var found = atkStr.match(/^([A-Za-z0-9_~\.\[\]]+)(?:\(([\d,\s]+)\))?$/);
+	var found = atkStr.match(/^([A-Za-z0-9_~\.\[\] ]+)(?:\(([\d,\s]+)\))?$/);
 	if (!found) {
 		console.log('Error parsing "' + atkStr + '"');
 		return null;
@@ -251,3 +251,49 @@ var combo = function(character, chains, options) {
 
 	return result;
 };
+
+var minDamage = function(move) {
+	total = 0;
+	for (var hit = 0; hit < move.d.length; hit++) {
+		var dmg = scaleDmg(minScaling(move, hit), move.d[hit]);
+		//console.log(dmg);
+		total += dmg;
+	}
+	return total;
+}
+
+var minDamagePerDrama = function(move) {
+	return minDamage(move) / dizzy(move);
+}
+
+var rankMoves = function(charName, rankFunc, groupByType) {
+	var mapping = { 'L': 0, 'M': 1, 'H': 2, 'S': 3, 'X': 4 };
+	var c = characters[charName];
+	var list = [];
+	for (var moveName in c.moveset) {
+		var move = c.move(moveName);
+
+		list.push({
+			'move': moveName,
+			'type': move.t,
+			'val': rankFunc(move)
+		});
+	}
+	list.sort(function(a, b) {
+		if (groupByType && a.type != b.type) {
+			return mapping[a.type] - mapping[b.type];
+		}
+		return b.val - a.val;
+	});
+	for (var i of list) {
+		console.log(i.move + ': ' + i.val);
+	}
+}
+
+var minScaledMoves = function(charName) {
+	return rankMoves(charName, minDamage, true);
+}
+
+var minScaledMovesPerDrama = function(charName) {
+	return rankMoves(charName, minDamagePerDrama, false);
+}

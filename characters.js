@@ -42,7 +42,7 @@ var characters = {
 		'Throw':   {t:'X',
 			forcedScaling:50.0,
 			freezeScaling:true,
-			forcedStage:3
+			forcedStage:2
 		},
 		'Lvl1': {t:'X', lv:1, m:[-100]},
 		'Lvl2': {t:'X', lv:2, m:[-200]},
@@ -382,7 +382,7 @@ var characters = {
 			minScaling:{16:1.0, 17:1.0}
 		},
 		'qcb.PP':           {com:'Lvl3', d:[550..x(7), 110..x(60)].flat()},
-		'qcb.PP[Big Band]': {com:'Lvl3', d:[550..x(7), 110..x(76)].flat()},
+		'qcb.PP[Big Band]': {com:'Lvl3', d:[550..x(7), 110..x(77)].flat()},
 		'qcb.PP[Corner]':   {com:'Lvl3', d:[550..x(4), 110..x(46)].flat()},
 		'Level5':           {com:'Lvl5', d:[400..x(20), 4500].flat()},
 		// Misc

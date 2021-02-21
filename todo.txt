@@ -1,4 +1,5 @@
 General
+- Accept string for character in combo function
 - Assists
 - Improve notation for self-chain moves?
 - Interleaved attacks
